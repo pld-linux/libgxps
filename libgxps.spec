@@ -1,4 +1,5 @@
 Summary:	XPS documents library
+Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
 Version:	0.2.1
 Release:	1
@@ -6,6 +7,7 @@ License:	LGPL v2
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.2/%{name}-%{version}.tar.xz
 # Source0-md5:	1ff62407800ec96e7f1473e67757ec01
+Patch0:		%{name}-doc.patch
 URL:		http://live.gnome.org/libgxps
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.10
@@ -21,14 +23,22 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
+BuildRequires:	libxslt-progs
 BuildRequires:	pkgconfig
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+Requires:	cairo >= 1.10.0
+Requires:	glib2 >= 1:2.24.0
+Requires:	libarchive >= 2.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 libgxps is a GObject based library for handling and rendering XPS
 documents.
+
+%description -l pl.UTF-8
+libgxps to oparta na szkielecie GObject biblioteka do obsługi i
+renderowania dokumentów XPS.
 
 %package devel
 Summary:	Header files for libgxps library
@@ -45,6 +55,18 @@ Header files for libgxps library.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki libgxps.
 
+%package static
+Summary:	Static libgxps libary
+Summary(pl.UTF-8):	Statyczna biblioteka libgxps
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static libgxps libary.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka libgxps.
+
 %package apidocs
 Summary:	libgxps API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libgxps
@@ -59,6 +81,7 @@ Dokumentacja API biblioteki libgxps.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -69,8 +92,7 @@ Dokumentacja API biblioteki libgxps.
 %configure \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-gtk-doc \
-	--disable-silent-rules \
-	--disable-static
+	--disable-silent-rules
 %{__make}
 
 %install
@@ -79,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
@@ -105,6 +128,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gir-1.0/GXPS-0.1.gir
 %{_includedir}/libgxps
 %{_pkgconfigdir}/libgxps.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libgxps.a
 
 %files apidocs
 %defattr(644,root,root,755)

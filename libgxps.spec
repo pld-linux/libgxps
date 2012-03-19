@@ -1,13 +1,12 @@
 Summary:	XPS documents library
 Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
-Version:	0.2.1
-Release:	2
+Version:	0.2.2
+Release:	1
 License:	LGPL v2
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.2/%{name}-%{version}.tar.xz
-# Source0-md5:	1ff62407800ec96e7f1473e67757ec01
-Patch0:		%{name}-doc.patch
+# Source0-md5:	65bec2033ff71307f429dc3f91d60233
 URL:		http://live.gnome.org/libgxps
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake >= 1:1.10
@@ -81,7 +80,6 @@ Dokumentacja API biblioteki libgxps.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}

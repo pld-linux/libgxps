@@ -2,7 +2,7 @@ Summary:	XPS documents library
 Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
 Version:	0.2.2
-Release:	7
+Release:	8
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.2/%{name}-%{version}.tar.xz

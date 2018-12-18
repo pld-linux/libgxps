@@ -1,34 +1,39 @@
+#
+# Conditional build:
+%bcond_without	static_libs	# static library
+
 Summary:	XPS documents library
 Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
-Version:	0.2.5
+Version:	0.3.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.2/%{name}-%{version}.tar.xz
-# Source0-md5:	c10e1ef5b2d61c88f4da2bd252a9e239
-URL:		http://live.gnome.org/libgxps
-BuildRequires:	autoconf >= 2.57
-BuildRequires:	automake >= 1:1.10
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.3/%{name}-%{version}.tar.xz
+# Source0-md5:	f4362c436c6ff99d7b3ea95c05989e44
+URL:		https://wiki.gnome.org/Projects/libgxps
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2
-BuildRequires:	glib2-devel >= 1:2.24.0
-BuildRequires:	gnome-common
+BuildRequires:	glib2-devel >= 1:2.36.0
 BuildRequires:	gobject-introspection-devel >= 0.10.1
 BuildRequires:	gtk-doc >= 1.14
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	libarchive-devel >= 2.8.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libtiff-devel
-BuildRequires:	libtool
+BuildRequires:	libtiff-devel >= 4
 BuildRequires:	libxslt-progs
+BuildRequires:	meson >= 0.36.0
+BuildRequires:	ninja
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.727
+BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	cairo >= 1.10.0
-Requires:	glib2 >= 1:2.24.0
+Requires:	glib2 >= 1:2.36.0
 Requires:	libarchive >= 2.8.0
+Requires:	libtiff >= 4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -45,7 +50,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libgxps
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	cairo-devel >= 1.10.0
-Requires:	glib2-devel >= 1:2.24.0
+Requires:	glib2-devel >= 1:2.36.0
 Requires:	libarchive-devel >= 2.8.0
 
 %description devel
@@ -84,26 +89,21 @@ Dokumentacja API biblioteki libgxps.
 %prep
 %setup -q
 
+%if %{with static_libs}
+%{__sed} -i -e 's/shared_library/library/' libgxps/meson.build
+%endif
+
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--with-html-dir=%{_gtkdocdir} \
-	--enable-gtk-doc \
-	--disable-silent-rules
-%{__make}
+%meson build \
+	-Denable-gtk-doc=true \
+	-Denable-man=true
+
+%meson_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%meson_install -C build
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -113,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS MAINTAINERS NEWS README TODO
 %attr(755,root,root) %{_bindir}/xpstojpeg
 %attr(755,root,root) %{_bindir}/xpstopdf
 %attr(755,root,root) %{_bindir}/xpstopng
@@ -122,6 +122,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgxps.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgxps.so.2
 %{_libdir}/girepository-1.0/GXPS-0.1.typelib
+%{_mandir}/man1/xpstojpeg.1*
+%{_mandir}/man1/xpstopdf.1*
+%{_mandir}/man1/xpstopng.1*
+%{_mandir}/man1/xpstops.1*
+%{_mandir}/man1/xpstosvg.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -130,9 +135,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libgxps
 %{_pkgconfigdir}/libgxps.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgxps.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)

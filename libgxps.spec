@@ -5,12 +5,12 @@
 Summary:	XPS documents library
 Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
-Version:	0.3.0
+Version:	0.3.1
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.3/%{name}-%{version}.tar.xz
-# Source0-md5:	f4362c436c6ff99d7b3ea95c05989e44
+# Source0-md5:	ade83c264b3af2551a0dff9144478df8
 URL:		https://wiki.gnome.org/Projects/libgxps
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2

@@ -5,12 +5,12 @@
 Summary:	XPS documents library
 Summary(pl.UTF-8):	Biblioteka do obsługi dokumentów XPS
 Name:		libgxps
-Version:	0.3.1
+Version:	0.3.2
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgxps/0.3/%{name}-%{version}.tar.xz
-# Source0-md5:	ade83c264b3af2551a0dff9144478df8
+Source0:	https://download.gnome.org/sources/libgxps/0.3/%{name}-%{version}.tar.xz
+# Source0-md5:	0527ac7c8c405445e96a5baa6019a0c3
 URL:		https://wiki.gnome.org/Projects/libgxps
 BuildRequires:	cairo-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2
@@ -24,9 +24,9 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel >= 4
 BuildRequires:	libxslt-progs
 BuildRequires:	meson >= 0.36.0
-BuildRequires:	ninja
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.727
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -76,9 +76,7 @@ Summary:	libgxps API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libgxps
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 API documentation for libgxps library.

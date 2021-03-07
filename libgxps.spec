@@ -76,7 +76,7 @@ Summary:	libgxps API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libgxps
 Group:		Documentation
 Requires:	gtk-doc-common
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 API documentation for libgxps library.

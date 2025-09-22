@@ -26,7 +26,7 @@ BuildRequires:	libxslt-progs
 BuildRequires:	meson >= 0.36.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -92,7 +92,7 @@ Dokumentacja API biblioteki libgxps.
 %endif
 
 %build
-%meson build \
+%meson \
 	-Denable-gtk-doc=true \
 	-Denable-man=true
 

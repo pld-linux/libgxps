@@ -97,12 +97,12 @@ Dokumentacja API biblioteki libgxps.
 	-Denable-man=true \
 	-Denable-test=false
 
-%meson_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%meson_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT

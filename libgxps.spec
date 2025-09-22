@@ -23,7 +23,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel >= 4
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.36.0
+BuildRequires:	meson >= 0.43.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 2.042

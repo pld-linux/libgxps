@@ -94,7 +94,8 @@ Dokumentacja API biblioteki libgxps.
 %build
 %meson \
 	-Denable-gtk-doc=true \
-	-Denable-man=true
+	-Denable-man=true \
+	-Denable-test=false
 
 %meson_build -C build
 
